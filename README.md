@@ -111,6 +111,12 @@ To set up this project locally, follow these steps:
 ### TBD
 
 ```js
+router.post('/', async (req, res) => {
+  const { title, description, date, time, location, category, organizer } = req.body;
+  const event = new Event({ title, description, date, time, location, category, organizer });
+  await event.save();
+  res.status(201).send('Event created');
+});
 
 ```
 
