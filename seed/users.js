@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { User } = require('../models');
 
 User.create({
     email: 'admin@example.com',
-    password: bcrypt.hashSync('adminpassword', 10),
+    password: 'adminpassword',
     role: 'admin'
 })
 .then(user => {
