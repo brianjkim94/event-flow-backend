@@ -1,10 +1,9 @@
 function isLoggedIn(req, res, next) {
-    if (!req.user) {
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
         req.flash('error', 'You need to be signed in to view page. Please login...');
-        res.redirect('/auth/login');
-    } else {
-        next();
+        return res.redirect('/auth/login');
     }
+    next();
 }
 
 module.exports = isLoggedIn;
