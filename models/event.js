@@ -11,5 +11,5 @@ const eventSchema = new Schema({
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
-
-module.exports = mongoose.model('Event', eventSchema);
+const Event = mongoose.model('Event', eventSchema);
+module.exports = Event;
