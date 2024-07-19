@@ -1,13 +1,12 @@
 const express = require('express');
-const { Event } = require('../models');
+const { RSVP } = require('../models');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
 router.post('/:eventId/rsvp', isLoggedIn, async (req, res) => {
   const { userId } = req.body;
-  const event = await Event.findById(req.params.eventId);
-  event.attendees.push(userId);
-  await event.save();
+  const rsvp = new RSVP({ user: userId, event: req.params.eventId });
+  await rsvp.save();
   res.status(200).send('RSVP successful');
 });
 
