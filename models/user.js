@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
-const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['user', 'admin'], default: 'user' }
+    username: { type: String, required: true, unique: true },
+    hashedPassword: { type: String, required: true },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    name: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    location: { type: String, required: true }
 }, { timestamps: true });
 
-userSchema.pre("save", function (next) {
-  //hash
-  console.log("---------- Password---------,", this.password);
-  let hash = bcrypt.hashSync(this.password, 12);
-  console.log("----------HASH--------", hash);
-  this.password = hash;
-  next();
+userSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        delete returnedObject.hashedPassword;
+    }
 });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+

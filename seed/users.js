@@ -5,7 +5,10 @@ const { User } = require('../models');
 User.create({
     email: 'admin@example.com',
     password: 'adminpassword',
-    role: 'admin'
+    role: 'admin',
+    name: 'Admin User',
+    phoneNumber: '123-456-7890',
+    location: 'Admin Location'
 })
 .then(user => {
     console.log('---- NEW USER ----\n', user);

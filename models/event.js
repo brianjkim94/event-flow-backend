@@ -9,7 +9,8 @@ const eventSchema = new Schema({
   location: { type: String, required: true },
   category: { type: String, required: true },
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  rsvp: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RSVP' }],
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }]
 });
 
 const Event = mongoose.model('Event', eventSchema);
