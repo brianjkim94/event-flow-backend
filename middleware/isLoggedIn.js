@@ -1,9 +1,17 @@
+const jwt = require('jsonwebtoken');
+
 function isLoggedIn(req, res, next) {
-    if (!req.isAuthenticated || !req.isAuthenticated()) {
-        req.flash('error', 'You need to be signed in to view page. Please login...');
-        return res.redirect('/auth/login');
+    const token = req.header('Authorization').replace('Bearer ', '');
+    if (!token) {
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
     }
-    next();
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.status(400).json({ error: 'Invalid token.' });
+    }
 }
 
 module.exports = isLoggedIn;
