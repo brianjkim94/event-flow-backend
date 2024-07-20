@@ -18,6 +18,7 @@ router.post('/signup', async (req, res) => {
             username: req.body.username,
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
             name: req.body.firstName + ' ' + req.body.lastName,
+            name: req.body.firstName +' '+req.body.lastName,
             phoneNumber: req.body.phone,
             location: req.body.state,
             email: req.body.email
