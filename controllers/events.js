@@ -15,6 +15,11 @@ router.get('/', async (req, res) => {
   res.status(200).json(events);
 });
 
+router.get('/:id', async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  res.status(200).json(event);
+});
+
 router.put('/:id', isLoggedIn, async (req, res) => {
   const { title, description, date, time, location, category } = req.body;
   const event = await Event.findByIdAndUpdate(req.params.id, { title, description, date, time, location, category }, { new: true });
@@ -27,3 +32,4 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
 });
 
 module.exports = router;
+

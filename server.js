@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 const eventRoutes = require('./controllers/events');
 const rsvpRoutes = require('./controllers/rsvp');
+const tagRoutes = require('./controllers/tags');
 const usersRoutes = require('./controllers/users');
 const isLoggedIn = require('./middleware/isLoggedIn');
 
@@ -30,6 +31,7 @@ app.use(flash());
 
 app.use('/events', eventRoutes);
 app.use('/rsvp', rsvpRoutes);
+app.use('/tags', tagRoutes);
 app.use('/users', usersRoutes);
 
 const PORT = process.env.PORT || 3000;
