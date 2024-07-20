@@ -18,7 +18,8 @@ router.post('/signup', async (req, res) => {
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
             name: req.body.firstName +' '+req.body.lastName,
             phoneNumber: req.body.phone,
-            location: req.body.state
+            location: req.body.state,
+            email: req.body.email
         });
         const token = jwt.sign(
             { username: user.username, _id: user._id },
