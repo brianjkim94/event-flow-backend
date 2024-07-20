@@ -4,6 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
+
 const authRoutes = require('./controllers/auth');
 const eventRoutes = require('./controllers/events');
 const rsvpRoutes = require('./controllers/rsvp');
