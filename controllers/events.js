@@ -6,8 +6,13 @@ const router = express.Router();
 
 
 router.get('/',isLoggedIn, async (req, res) => {
-  const events = await Event.find();
-  res.status(200).json(events);
+  try {
+    const events = await Event.find();
+    res.status(200).json({events});
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+
 });
 
 router.put('/:id', isLoggedIn, async (req, res) => {
