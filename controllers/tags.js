@@ -4,31 +4,51 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
 router.post('/', isLoggedIn, async (req, res) => {
-  const { name } = req.body;
-  const tag = new Tag({ name });
-  await tag.save();
-  res.status(201).send('Tag created');
+  try {
+    const { name } = req.body;
+    const tag = new Tag({ name });
+    await tag.save();
+    res.status(201).json({ message: 'Tag created', tag });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.get('/', async (req, res) => {
-  const tags = await Tag.find();
-  res.status(200).json(tags);
+  try {
+    const tags = await Tag.find();
+    res.status(200).json(tags);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.get('/:id', async (req, res) => {
-  const tag = await Tag.findById(req.params.id);
-  res.status(200).json(tag);
+  try {
+    const tag = await Tag.findById(req.params.id);
+    res.status(200).json(tag);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.put('/:id', isLoggedIn, async (req, res) => {
-  const { name } = req.body;
-  const tag = await Tag.findByIdAndUpdate(req.params.id, { name }, { new: true });
-  res.status(200).send('Tag updated');
+  try {
+    const { name } = req.body;
+    const tag = await Tag.findByIdAndUpdate(req.params.id, { name }, { new: true });
+    res.status(200).json({ message: 'Tag updated', tag });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.delete('/:id', isLoggedIn, async (req, res) => {
-  await Tag.findByIdAndDelete(req.params.id);
-  res.status(200).send('Tag deleted');
+  try {
+    await Tag.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Tag deleted' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 module.exports = router;
