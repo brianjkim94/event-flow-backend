@@ -3,21 +3,11 @@ const { Event } = require('../models');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
-router.post('/', isLoggedIn, async (req, res) => {
-  const { title, description, date, time, location, category, organizer } = req.body;
-  const event = new Event({ title, description, date, time, location, category, organizer });
-  await event.save();
-  res.status(201).send('Event created');
-});
 
-router.get('/', async (req, res) => {
+
+router.get('/',isLoggedIn, async (req, res) => {
   const events = await Event.find();
   res.status(200).json(events);
-});
-
-router.get('/:id', async (req, res) => {
-  const event = await Event.findById(req.params.id);
-  res.status(200).json(event);
 });
 
 router.put('/:id', isLoggedIn, async (req, res) => {
@@ -31,5 +21,17 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
   res.status(200).send('Event deleted');
 });
 
-module.exports = router;
+router.post('/', isLoggedIn, async (req, res) => {
+  try { 
+    console.log('request', req.body)
+    const { title, description, date, time, state, country, category, } = req.body;
+    const event = await Event.create({ title, description, date, time, country, state, category});
+    
+    res.status(201).json({event});
+    
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
+module.exports = router;
