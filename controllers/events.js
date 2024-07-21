@@ -18,7 +18,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 router.get('/', isLoggedIn, async (req, res) => {
   try {
     const events = await Event.find().populate('organizer tags rsvp');
-    res.status(200).json({events});
+    res.status(200).json(events);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
