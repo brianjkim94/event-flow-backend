@@ -51,4 +51,13 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
   }
 });
 
+router.get('/mytags', isLoggedIn, async (req, res) => {
+  try {
+    const tags = await Tag.find({ user: req.user._id });
+    res.status(200).json(tags);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;

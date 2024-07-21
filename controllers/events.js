@@ -56,7 +56,6 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
   }
 });
 
-// Route to get all events created by the authenticated user specfically
 router.get('/myevents', isLoggedIn, async (req, res) => {
   try {
     const events = await Event.find({ organizer: req.user._id }).populate('organizer tags rsvp');
