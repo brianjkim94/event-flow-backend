@@ -4,31 +4,60 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
 router.post('/:eventId/rsvp', isLoggedIn, async (req, res) => {
-  const { userId } = req.body;
-  const rsvp = new RSVP({ user: userId, event: req.params.eventId });
-  await rsvp.save();
-  res.status(200).send('RSVP successful');
+  try {
+    const { userId } = req.body;
+    const rsvp = new RSVP({ user: userId, event: req.params.eventId });
+    await rsvp.save();
+    res.status(200).json({ message: 'RSVP successful', rsvp });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.get('/', async (req, res) => {
-  const rsvps = await RSVP.find();
-  res.status(200).json(rsvps);
+  try {
+    const rsvps = await RSVP.find().populate('user event');
+    res.status(200).json(rsvps);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.get('/:id', async (req, res) => {
-  const rsvp = await RSVP.findById(req.params.id);
-  res.status(200).json(rsvp);
+  try {
+    const rsvp = await RSVP.findById(req.params.id).populate('user event');
+    res.status(200).json(rsvp);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.put('/:id', isLoggedIn, async (req, res) => {
-  const { user, event } = req.body;
-  const rsvp = await RSVP.findByIdAndUpdate(req.params.id, { user, event }, { new: true });
-  res.status(200).send('RSVP updated');
+  try {
+    const { user, event } = req.body;
+    const rsvp = await RSVP.findByIdAndUpdate(req.params.id, { user, event }, { new: true }).populate('user event');
+    res.status(200).json({ message: 'RSVP updated', rsvp });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.delete('/:id', isLoggedIn, async (req, res) => {
-  await RSVP.findByIdAndDelete(req.params.id);
-  res.status(200).send('RSVP deleted');
+  try {
+    await RSVP.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'RSVP deleted' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get('/myrsvp', isLoggedIn, async (req, res) => {
+  try {
+    const rsvps = await RSVP.find({ user: req.user._id }).populate('user event');
+    res.status(200).json(rsvps);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 module.exports = router;

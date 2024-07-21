@@ -22,8 +22,10 @@ const seedData = async () => {
       name: 'John Jones',
       phoneNumber: '123-456-7890',
       location: 'New York',
-      role: 'user',
-      email: 'johnjones@ga.com'
+
+      email:'email@gmail.com',
+      role: 'user'
+
     });
 
     const user2 = await User.create({
@@ -32,8 +34,9 @@ const seedData = async () => {
       name: 'Jane Jones',
       phoneNumber: '098-765-4321',
       location: 'Los Angeles',
-      role: 'admin',
-      email: 'janejones@ga.com'
+
+      email: 'jane_jones@gmail.com',
+      role: 'admin'
     });
 
     // Create tags
