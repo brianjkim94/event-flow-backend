@@ -15,15 +15,6 @@ router.post('/', isLoggedIn, async (req, res) => {
   }
 });
 
-router.get('/', isLoggedIn, async (req, res) => {
-  try {
-    const events = await Event.find().populate('organizer tags rsvp');
-    res.status(200).json(events);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
 router.get('/myevents', isLoggedIn, async (req, res) => {
   try {
     const events = await Event.find({ organizer: req.user._id }).populate('organizer tags rsvp');
@@ -37,6 +28,15 @@ router.get('/category/:category', isLoggedIn, async (req, res) => {
   try {
     const category = req.params.category;
     const events = await Event.find({ category }).populate('organizer tags rsvp');
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get('/', isLoggedIn, async (req, res) => {
+  try {
+    const events = await Event.find().populate('organizer tags rsvp');
     res.status(200).json(events);
   } catch (error) {
     res.status(400).json({ error: error.message });
