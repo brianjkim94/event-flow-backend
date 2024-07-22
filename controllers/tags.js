@@ -14,7 +14,7 @@ router.post('/', isLoggedIn, async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
   try {
     const tags = await Tag.find();
     res.status(200).json(tags);
@@ -23,7 +23,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/mytags', isLoggedIn, async (req, res) => {
+  try {
+    const tags = await Tag.find({ user: req.user._id });
+    res.status(200).json(tags);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get('/:id', isLoggedIn, async (req, res) => {
   try {
     const tag = await Tag.findById(req.params.id);
     res.status(200).json(tag);
@@ -46,15 +55,6 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
   try {
     await Tag.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Tag deleted' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-router.get('/mytags', isLoggedIn, async (req, res) => {
-  try {
-    const tags = await Tag.find({ user: req.user._id });
-    res.status(200).json(tags);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
