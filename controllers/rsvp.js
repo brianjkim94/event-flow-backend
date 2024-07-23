@@ -3,11 +3,14 @@ const { RSVP } = require('../models');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
-router.post('/:eventId/rsvp', isLoggedIn, async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
   try {
-    const { userId, registration } = req.body;
-    const rsvp = new RSVP({ user: userId, event: req.params.eventId, registration });
-    await rsvp.save();
+    const { eventId, eventData } = req.body;
+    let checker;
+    if(eventData.rsvp ==='Yes'){
+      checker = true;
+    }
+    const rsvp = await RSVP.create({ user: eventData.userId, event: eventId, registration: checker });
     res.status(200).json({ message: 'RSVP successful', rsvp });
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -64,6 +64,7 @@ router.put('/:id', isLoggedIn, async (req, res) => {
     ).populate('organizer tags rsvp');
     res.status(200).json({ message: 'Event updated', event });
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 });
