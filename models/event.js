@@ -10,8 +10,8 @@ const eventSchema = new Schema({
   state: { type: String, required: true },
   category: { type: String, required: true },
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  rsvp: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RSVP' }],
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }]
+  rsvp: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RSVP', default: null }],
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: null }]
 });
 
 const Event = mongoose.model('Event', eventSchema);

@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.post('/', isLoggedIn, async (req, res) => {
   try {
-    const { title, description, date, time, country, state, category, tags, rsvp } = req.body;
+    console.log('-----Request Body-------', req.body);
+    const { title, description, date, time, country, state, category,} = req.body;
     const event = await Event.create({ 
-      title, description, date, time, country, state, category, organizer: req.user._id, tags, rsvp 
+      title, description, date, time, country, state, category, organizer: req.user._id,
     });
     res.status(201).json({ message: 'Event created', event });
   } catch (error) {
@@ -24,9 +25,10 @@ router.get('/myevents', isLoggedIn, async (req, res) => {
   }
 });
 
-router.get('/category/:category', isLoggedIn, async (req, res) => {
+router.get('/category', isLoggedIn, async (req, res) => {
   try {
-    const category = req.params.category;
+    const category = req.query.category; 
+    console.log(category);
     const events = await Event.find({ category }).populate('organizer tags rsvp');
     res.status(200).json(events);
   } catch (error) {
