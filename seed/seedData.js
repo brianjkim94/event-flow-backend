@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { User, Event, Tag, RSVP } = require('../models');
 
-mongoose.connect(process.env.MONGO_URI_LOCAL)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected for seeding'))
   .catch(err => console.log('Database error during seeding:', err));
 
@@ -21,8 +21,8 @@ const seedData = async () => {
       hashedPassword: bcrypt.hashSync('password123', 12),
       name: 'John Jones',
       phoneNumber: '123-456-7890',
-      location: 'New York',
-
+      country: 'United States of America',
+      state: 'New York',
       email:'email@gmail.com',
       role: 'user'
 
@@ -33,8 +33,8 @@ const seedData = async () => {
       hashedPassword: bcrypt.hashSync('password123', 12),
       name: 'Jane Jones',
       phoneNumber: '098-765-4321',
-      location: 'Los Angeles',
-
+      country: 'United States of America',
+      state: 'New York',
       email: 'jane_jones@gmail.com',
       role: 'admin'
     });
@@ -49,7 +49,8 @@ const seedData = async () => {
       description: 'John Jones 25th Birthday',
       date: new Date('2024-08-01'),
       time: '10:00 AM',
-      location: 'San Francisco',
+      country: 'United States of America',
+      state: 'New York',
       category: 'Birthday',
       organizer: user2._id,
       tags: [tag1._id]
@@ -60,7 +61,8 @@ const seedData = async () => {
       description: 'John and Jane Wedding',
       date: new Date('2024-09-01'),
       time: '09:00 AM',
-      location: 'Los Angeles',
+      country: 'United States of America',
+      state: 'New York',
       category: 'Wedding',
       organizer: user2._id,
       tags: [tag2._id]
