@@ -20,8 +20,16 @@ Backend Web Server. Servering RESTful API using Node.JS and Express. MongoDB, Mo
 [https://event-flow-backend.onrender.com]()
 [https://github.com/brianjkim94/event-flow-backend]()
 
-## Features
+## Technologies Used
+- **Node.js:** 
+- **Express.js:** 
+- **MongoDB:** 
+- **Mongoose:** 
+- **JWT (JSON Web Tokens):**
+- **bcrypt.js:**
+- **dotenv:** 
 
+## Features
 User Routes
 - **POST /users/signup:** Register a new user.
 - **POST /users/signin:** Sign in an existing user.
